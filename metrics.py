@@ -16,7 +16,8 @@ def accuracy(y_hat, y):
     """
     assert(y_hat.size == y.size)
     # TODO: Write here
-    pass
+    return sum([1 for i in range(y_hat.size) if y_hat.iloc[i] == y.iloc[i]]) / y.size
+    # returns ||y = y_hat|| / ||y||
 
 def precision(y_hat, y, cls):
     """
@@ -29,7 +30,10 @@ def precision(y_hat, y, cls):
     Output:
     > Returns the precision as float
     """
-    pass
+    assert(y_hat.size == y.size)
+    if sum([1 for i in range(y.size) if y_hat[i] == cls]) != 0: return sum([1 for i in range(y.size) if y_hat[i] == y[i] and y[i] == cls]) / sum([1 for i in range(y.size) if y_hat[i] == cls])
+    else: return 0
+    # returns ||y = y_hat = cls|| / ||y_hat = cls||
 
 def recall(y_hat, y, cls):
     """
@@ -42,7 +46,10 @@ def recall(y_hat, y, cls):
     Output:
     > Returns the recall as float
     """
-    pass
+    assert(y_hat.size == y.size)
+    return sum([1 for i in range(y.size) if y_hat[i] == y[i] and y[i] == cls]) / sum([1 for i in range(y.size) if y[i] == cls])
+    # returns ||y = y_hat = cls|| / ||y = cls||
+    
 
 def rmse(y_hat, y):
     """
@@ -54,8 +61,9 @@ def rmse(y_hat, y):
     Output:
     > Returns the rmse as float
     """
-
-    pass
+    assert(y_hat.size == y.size)
+    return (sum([(y_hat.iloc[i] - y.iloc[i])**2 for i in range(y.size)]) / y.size)**(0.5)
+    # returns (sum((y_hat[i] - y[i])**2) / N)**(1/2)
 
 def mae(y_hat, y):
     """
@@ -67,4 +75,6 @@ def mae(y_hat, y):
     Output:
     > Returns the mae as float
     """
-    pass
+    assert(y_hat.size == y.size)
+    return sum([abs(y_hat.iloc[i] - y.iloc[i]) for i in range(y.size)]) / y.size
+    # returns sum(|y_hat[i] - y[i]|) / N
